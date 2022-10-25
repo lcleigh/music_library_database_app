@@ -22,3 +22,13 @@ rspec
 rackup
 ```
 I created this [Get Albums Route Recipe](link here "Get Albums Route Recipe") using this [Design Recipe](https://github.com/makersacademy/web-applications/blob/main/resources/sinatra_route_design_recipe_template.md "Design Recipe Template") template.
+
+I then followed the video and test drove a GET /albums route. 
+
+Tasks:
+
+1. I have Test Driven a route for POST /albums to create a new album.
+
+2. I have Test Driven a route for GET /artists to get a list of all artists.
+
+3. I have Test Driven a route for POST /artists to create a new artist.
