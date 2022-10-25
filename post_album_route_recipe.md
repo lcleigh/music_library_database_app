@@ -57,7 +57,6 @@ GET /albums
 
 Response for 200 OK:
 Surfer Rosa
-Voyage
 Waterloo
 Super Trouper
 Bossanova
@@ -68,6 +67,7 @@ Baltimore
 Here Comes the Sun
 Fodder on My Wings
 Ring Ring
+Voyage
 ```
 
 ## 4. Encode as Tests Examples
