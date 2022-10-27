@@ -1,0 +1,13 @@
+<html>
+  <head></head>
+  <body>
+    <h1>Artists</h1>
+
+    <% @artists.map do |artist| %>
+        <div>Name: <a href="/artists/<%= artist.id %>"><%= artist.name %></a></div>
+        <div>Genre: <%= artist.genre %></a></div>
+        <br>
+    <% end %> 
+
+  </body>
+</html>

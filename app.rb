@@ -15,20 +15,28 @@ class Application < Sinatra::Base
   end
 
   get '/' do
-    @name = "Laura"
-
-    @cohort_name = "September 2022"
-    
     return erb(:index)
+  end
+
+  get '/about' do
+    return erb(:about)
+  end
+
+  get '/albums/:id' do
+    repo = AlbumRepository.new
+    artist_repo = ArtistRepository.new
+    @album = repo.find(params[:id])
+    @artist = artist_repo.find(@album.artist_id)
+    
+    return erb(:album)
+
   end
 
   get '/albums' do
     repo = AlbumRepository.new
-    albums = repo.all
+    @albums = repo.all
 
-    response = albums.map do |album|
-      album.title
-    end.join(', ')
+    return erb(:albums)
 
   end
 
@@ -47,11 +55,16 @@ class Application < Sinatra::Base
 
   get '/artists' do
     repo = ArtistRepository.new
-    artists = repo.all
+    @artists = repo.all
 
-    response = artists.map do |artist|
-      artist.name
-    end.join(', ')
+    return erb(:artists)
+  end
+
+  get '/artists/:id' do
+    repo = ArtistRepository.new
+    @artist = repo.find(params[:id])
+
+    return erb(:artist)
   end
 
   post '/artists' do

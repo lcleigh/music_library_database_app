@@ -15,9 +15,6 @@ def reset_artists_table
 end
 
 
-
-
-
 describe Application do
 
   before(:each) do 
@@ -31,33 +28,40 @@ describe Application do
   # class so our tests work.
   let(:app) { Application.new }
 
-  context 'GET /' do
-    it 'returns an html hello message with the given name' do
-      response = get('/', name: 'Laura')
-
-      expect(response.body).to include '<h1>Hello Laura!</h1>'
-     
-    end
-
-    it 'returns an html hello message with the given name' do
-      response = get('/', name: 'Daniel')
-
-      expect(response.body).to include '<h1>Hello Daniel!</h1>'
-     
-    end
-  end
-
 
   context 'GET /albums' do
-      it "should return the list of albums" do
+
+      it "should return the list of albums as a HTML page" do
         response = get('/albums')
 
-        expected_response = 'Doolittle, Surfer Rosa, Waterloo, Super Trouper, Bossanova, Lover, Folklore, I Put a Spell on You, Baltimore, Here Comes the Sun, Fodder on My Wings, Ring Ring'
-
-        expect(response.status).to eq 200
-        expect(response.body).to eq expected_response
+        expect(response.status). to eq 200
+        expect(response.body).to include '<h1>Albums</h1>'
+        expect(response.body).to include '<a href="/albums/2">Surfer Rosa</a>'
+        expect(response.body).to include '<a href="/albums/3">Waterloo</a>'
+        expect(response.body).to include '<a href="/albums/7">Folklore</a>'
       end
   end
+
+  context 'GET /albums/:id' do
+    it "returns the album info with id 1" do
+      response = get('/albums/1')
+
+      expect(response.status). to eq 200
+      expect(response.body).to include '<h1>Doolittle</h1>'
+      expect(response.body).to include 'Release year: 1989'
+      expect(response.body).to include 'Artist: Pixies'
+    end
+
+    it "returns the album info with id 2" do
+      response = get('/albums/2')
+
+      expect(response.status). to eq 200
+      expect(response.body).to include '<h1>Surfer Rosa</h1>'
+      expect(response.body).to include 'Release year: 1988'
+      expect(response.body).to include 'Artist: Pixies'
+    end
+  end
+
 
   context 'POST /albums' do
     it "should create a new album" do
@@ -74,13 +78,34 @@ describe Application do
   end
 
   context 'GET /artists' do
-    it "should return the list of artists" do
+    it "should return the list of artists as a html page with links" do
       response = get('/artists')
 
-      expected_response = 'Pixies, ABBA, Taylor Swift, Nina Simone'
-
       expect(response.status).to eq 200
-      expect(response.body).to eq expected_response
+      expect(response.body).to include '<h1>Artists</h1>'
+      expect(response.body).to include '<div>Name: <a href="/artists/1">Pixies</a></div>'
+      expect(response.body).to include '<div>Name: <a href="/artists/2">ABBA</a></div>'
+      expect(response.body).to include '<div>Name: <a href="/artists/3">Taylor Swift</a></div>'
+      expect(response.body).to include '<div>Name: <a href="/artists/4">Nina Simone</a></div>'
+    end
+
+  end
+
+  context 'GET /artists/:id' do
+    it 'returns the artist infro with id 1' do
+      response = get('/artists/1')
+
+      expect(response.status). to eq 200
+      expect(response.body).to include '<h1>Pixies</h1>'
+      expect(response.body).to include 'Genre: Rock'
+    end
+
+    it 'returns the artist infro with id 3' do
+      response = get('/artists/3')
+
+      expect(response.status). to eq 200
+      expect(response.body).to include '<h1>Taylor Swift</h1>'
+      expect(response.body).to include 'Genre: Pop'
     end
 
   end
