@@ -117,6 +117,24 @@ describe Application do
 
   end
 
+  context "GET /artists/new" do
+    it 'returns the form page to add a new artist' do
+      response = get('/artists/new')
+  
+      expect(response.status).to eq(200)
+      
+      expect(response.body).to include '<h1>Add an Artist</h1>'
+      # Assert we have the correct form tag with the action and method.
+      expect(response.body).to include '<form action="/artists" method="POST">'
+      expect(response.body).to include '<input type="text" name="name">'
+      expect(response.body).to include '<input type="text" name="genre">'
+      
+  
+      # We can assert more things, like having
+      # the right HTML form inputs, etc.
+    end
+  end
+
   context 'GET /artists/:id' do
     it 'returns the artist infro with id 1' do
       response = get('/artists/1')
@@ -137,16 +155,23 @@ describe Application do
   end
 
   context 'POST /artists' do
-    it "should create a new artist" do
-      response = post('/artists', name: 'Wild Nothing', genre: 'indie')
+
+    it "should validate artist parameters" do
+      response = post('/artists', invalid_artist_name: "Vengaboys", another_invalid_thing: 123)
+
+      expect(response.status).to eq 400
+    end
+
+    it "should create a new artist & return a sucess page" do
+      response = post('/artists', name: 'Dolly Parton', genre: 'Country')
 
       
       expect(response.status).to eq 200
-      expect(response.body).to eq ''
+      expect(response.body).to include 'Your Artist has been added.'
 
       response = get('/artists')
 
-      expect(response.body).to include 'Wild Nothing'
+      expect(response.body).to include 'Dolly Parton'
     end
   end
 

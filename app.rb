@@ -72,6 +72,12 @@ class Application < Sinatra::Base
     return erb(:artists)
   end
 
+  get '/artists/new' do
+    # This route doesn't do much,
+    # it returns the view with the HTML form.
+    return erb(:new_artist)
+  end
+
   get '/artists/:id' do
     repo = ArtistRepository.new
     @artist = repo.find(params[:id])
@@ -80,6 +86,11 @@ class Application < Sinatra::Base
   end
 
   post '/artists' do
+    if params[:name] == nil || params[:genre] == nil
+      status 400
+      return ''
+    end
+
     repo = ArtistRepository.new
     new_artist = Artist.new
     new_artist.name = params[:name]
@@ -88,7 +99,7 @@ class Application < Sinatra::Base
 
     repo.create(new_artist)
 
-    return ''
+    return erb(:artist_created)
     
   end
 
