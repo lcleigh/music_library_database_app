@@ -37,6 +37,10 @@ ___
 
 In the project I created a directory called views and in there a file called index.erb. This is where the html is stored.
 
-***erb is and embedded Ruby***
+***erb is embedded Ruby***
 
 The tests for the html file go in application_spec.rb also.
+
+## Creating forms which add items to the database
+
+4. I Test Drove and implemented form pages to add both a new artist and a new album, and be able to see the added artist or album in the appropriate list. I created some extra links to be able to navigate throught the different web pages.
