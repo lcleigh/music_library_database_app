@@ -6,6 +6,11 @@
     <% @albums.map do |album| %>
         <div>Title: <a href="/albums/<%= album.id %>"><%= album.title %></a>Released: <%= album.release_year %></div>        
     <% end %> 
-
+        <br>
+    <a href="/albums/new">Add an Album</a>
+        <br>
+    <a href="/">Home</a>
   </body>
 </html>
+
+
